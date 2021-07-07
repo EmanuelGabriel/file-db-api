@@ -1,4 +1,4 @@
-package com.ark.fileuploaddb.model;
+package com.ark.fileuploaddb.domain.entity;
 
 import java.io.Serializable;
 
@@ -14,6 +14,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+/**
+ * 
+ * @author emanuel.sousa
+ *
+ */
 
 @Builder
 @Data

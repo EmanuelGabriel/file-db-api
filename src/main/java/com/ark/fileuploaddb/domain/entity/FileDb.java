@@ -1,4 +1,4 @@
-package com.ark.fileuploaddb.model;
+package com.ark.fileuploaddb.domain.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -18,6 +18,12 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+/**
+ * 
+ * @author emanuel.sousa
+ *
+ */
 
 @Data
 @Builder
@@ -52,7 +58,7 @@ public class FileDb implements Serializable {
 	private LocalDateTime dataAtualizacao;
 
 	@Lob
-	@Column(name = "dados")
+	@Column(name = "dados", length = 1000)
 	private byte[] dados;
 
 }

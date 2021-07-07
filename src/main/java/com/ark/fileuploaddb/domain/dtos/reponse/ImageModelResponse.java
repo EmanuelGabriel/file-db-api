@@ -1,9 +1,15 @@
-package com.ark.fileuploaddb.model;
+package com.ark.fileuploaddb.domain.dtos.reponse;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+/**
+ * 
+ * @author emanuel.sousa
+ *
+ */
 
 @Data
 @Builder

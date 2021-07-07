@@ -11,9 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ark.fileuploaddb.model.FileDb;
-import com.ark.fileuploaddb.model.FileModelResponse;
-import com.ark.fileuploaddb.repository.FileDbRepository;
+import com.ark.fileuploaddb.domain.dtos.reponse.FileModelResponse;
+import com.ark.fileuploaddb.domain.entity.FileDb;
+import com.ark.fileuploaddb.domain.repository.FileDbRepository;
 import com.ark.fileuploaddb.service.exception.ObjNaoEncontradoException;
 
 import lombok.extern.slf4j.Slf4j;

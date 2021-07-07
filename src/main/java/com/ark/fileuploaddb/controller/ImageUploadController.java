@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ark.fileuploaddb.model.ImageModel;
-import com.ark.fileuploaddb.model.ImageModelResponse;
-import com.ark.fileuploaddb.repository.ImageModelRepository;
+import com.ark.fileuploaddb.domain.dtos.reponse.ImageModelResponse;
+import com.ark.fileuploaddb.domain.entity.ImageModel;
+import com.ark.fileuploaddb.domain.repository.ImageModelRepository;
 import com.ark.fileuploaddb.service.exception.ObjNaoEncontradoException;
 
 import lombok.extern.slf4j.Slf4j;
