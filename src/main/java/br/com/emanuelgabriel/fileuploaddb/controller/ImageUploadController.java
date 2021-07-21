@@ -12,7 +12,6 @@ import java.util.zip.Inflater;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,7 +27,6 @@ import br.com.emanuelgabriel.fileuploaddb.service.exception.ObjNaoEncontradoExce
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@CrossOrigin(origins = "http://localhost:4200")
 @RestController
 @RequestMapping(value = "image", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ImageUploadController {
@@ -38,38 +36,42 @@ public class ImageUploadController {
 
 	@PostMapping("/upload")
 	public ImageModelResponse uploadImagem(@RequestParam("imageFile") MultipartFile file) throws IOException {
-		
-		log.info("Tamanho original da imagem em Byte {}", file.getBytes().length);
-		
-		ImageModel imagemModel = new ImageModel(file.getOriginalFilename(), file.getContentType(), compressorZLib(file.getBytes()));
 
-		// ImageModelResponse response = ImageModelResponse.builder().name(file.getOriginalFilename()).type(file.getContentType()).picByte(compressorZLib(file.getBytes())).build();
+		log.info("Tamanho original da imagem em Byte {}", file.getBytes().length);
+
+		ImageModel imagemModel = new ImageModel(file.getOriginalFilename(), file.getContentType(),
+				compressorZLib(file.getBytes()));
+
+		// ImageModelResponse response =
+		// ImageModelResponse.builder().name(file.getOriginalFilename()).type(file.getContentType()).picByte(compressorZLib(file.getBytes())).build();
 
 		imageModelRepository.save(imagemModel);
 
 		return this.entityToDTO(imagemModel);
 
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<List<ImageModelResponse>> getAll(){
+	public ResponseEntity<List<ImageModelResponse>> getAll() {
 		log.info("GET /image");
 		List<ImageModel> listImage = imageModelRepository.findAll();
-		return listImage != null ? ResponseEntity.ok().body(listEntityToDTO(listImage)) : ResponseEntity.ok().build(); 
+		return listImage != null ? ResponseEntity.ok().body(listEntityToDTO(listImage)) : ResponseEntity.ok().build();
 	}
 
 	@GetMapping(value = "/get/{imageName}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<ImageModelResponse> getImagem(@PathVariable("imageName") String imageName) throws IOException {
+	public ResponseEntity<ImageModelResponse> getImagem(@PathVariable("imageName") String imageName)
+			throws IOException {
 
 		final Optional<ImageModel> imageModelOpt = imageModelRepository.findByNameIgnoreCaseContaining(imageName);
 		if (!imageModelOpt.isPresent()) {
 			throw new ObjNaoEncontradoException("Arquivo não encontrado");
 		}
 
-		ImageModel imageModel = new ImageModel(imageModelOpt.get().getName(), imageModelOpt.get().getType(), descomprimirZLib(imageModelOpt.get().getPicByte()));
+		ImageModel imageModel = new ImageModel(imageModelOpt.get().getName(), imageModelOpt.get().getType(),
+				descomprimirZLib(imageModelOpt.get().getPicByte()));
 
 		ImageModelResponse response = this.entityToDTO(imageModel);
-		
+
 		return ResponseEntity.ok().body(response);
 	}
 
@@ -116,19 +118,20 @@ public class ImageUploadController {
 	 * Converte entidade para DTO
 	 * 
 	 * @author emanuel.sousa
-	 * @param 
+	 * @param
 	 * @return ImageModelResponse
 	 */
 	private ImageModelResponse entityToDTO(ImageModel imageModel) {
-		return new ImageModelResponse(imageModel.getId(), imageModel.getName(), imageModel.getType(), imageModel.getPicByte());
+		return new ImageModelResponse(imageModel.getId(), imageModel.getName(), imageModel.getType(),
+				imageModel.getPicByte());
 	}
 
 	private ImageModel dtoToEntity(ImageModelResponse dto) {
 		return new ImageModel().builder().id(dto.getId()).name(dto.getName()).type(dto.getType())
 				.picByte(dto.getPicByte()).build();
 	}
-	
-	private List<ImageModelResponse> listEntityToDTO(List<ImageModel> images){
+
+	private List<ImageModelResponse> listEntityToDTO(List<ImageModel> images) {
 		return images.stream().map(this::entityToDTO).collect(Collectors.toList());
 	}
 

@@ -2,6 +2,8 @@ package br.com.emanuelgabriel.fileuploaddb.controller;
 
 import java.net.URI;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -30,7 +32,7 @@ public class ClienteController {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping
-	public ResponseEntity<ClienteModelResponse> criar(@RequestBody ClienteModelInputRequest request) {
+	public ResponseEntity<ClienteModelResponse> criar(@Valid @RequestBody ClienteModelInputRequest request) {
 		log.info("POST /clientes - body {}", request);
 		ClienteModelResponse clienteModelResponse = clienteService.criar(request);
 		URI location = getUri(clienteModelResponse.getId());

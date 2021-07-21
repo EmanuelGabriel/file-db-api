@@ -43,14 +43,8 @@ public class ClienteService {
 			throw new RegraNegocioException("Já existe cliente registrado com este CPF");
 		}
 
-		// Endereco endereco = new Endereco();
-		// endereco.setNumero(request.getEndereco().getNumero());
-		// endereco.setLogradouro(request.getEndereco().getLogradouro());
-		// endereco.setBairro(request.getEndereco().getBairro());
-		// endereco.setCep(request.getEndereco().getCep());
 		Cliente clienteSalvo = this.clienteMapper.dtoToEntity(request);
 		clienteSalvo.setDataCadastro(LocalDateTime.now());
-		// clienteSalvo.setEndereco(endereco);
 
 		return this.clienteMapper.entityToDTO(clienteRepository.saveAndFlush(clienteSalvo));
 
